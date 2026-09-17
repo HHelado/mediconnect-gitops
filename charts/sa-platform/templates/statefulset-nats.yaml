@@ -1,0 +1,88 @@
+{{- if .Values.nats.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sa-platform.fullname" . }}-nats
+  labels:
+    {{- include "sa-platform.labels" . | nindent 4 }}
+    app.kubernetes.io/component: broker
+spec:
+  type: ClusterIP
+  ports:
+    - port: 4222
+      targetPort: 4222
+      name: client
+    - port: 8222
+      targetPort: 8222
+      name: monitor
+  selector:
+    {{- include "sa-platform.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: broker
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "sa-platform.fullname" . }}-nats
+  labels:
+    {{- include "sa-platform.labels" . | nindent 4 }}
+    app.kubernetes.io/component: broker
+spec:
+  serviceName: {{ include "sa-platform.fullname" . }}-nats
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "sa-platform.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: broker
+  template:
+    metadata:
+      labels:
+        {{- include "sa-platform.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: broker
+    spec:
+      containers:
+        - name: nats
+          image: "{{ .Values.nats.image.repository }}:{{ .Values.nats.image.tag }}"
+          imagePullPolicy: {{ .Values.nats.image.pullPolicy }}
+          args:
+            - "-js"
+            - "-sd"
+            - "/data/jetstream"
+            - "-m"
+            - "8222"
+          ports:
+            - name: client
+              containerPort: 4222
+            - name: monitor
+              containerPort: 8222
+          resources:
+            {{- toYaml .Values.nats.resources | nindent 12 }}
+          volumeMounts:
+            - name: nats-data
+              mountPath: /data/jetstream
+          livenessProbe:
+            httpGet:
+              path: /varz
+              port: monitor
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /varz
+              port: monitor
+            initialDelaySeconds: 5
+            periodSeconds: 5
+  volumeClaimTemplates:
+    - metadata:
+        name: nats-data
+        labels:
+          {{- include "sa-platform.labels" . | nindent 10 }}
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        {{- if or .Values.nats.persistence.storageClass .Values.global.storageClass }}
+        storageClassName: {{ .Values.nats.persistence.storageClass | default .Values.global.storageClass | quote }}
+        {{- end }}
+        resources:
+          requests:
+            storage: {{ .Values.nats.persistence.size | default "1Gi" }}
+{{- end }}

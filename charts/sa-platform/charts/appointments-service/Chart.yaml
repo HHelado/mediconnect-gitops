@@ -1,0 +1,6 @@
+apiVersion: v2
+name: appointments-service
+description: Subchart para el Microservicio de Citas y Prescripciones GraphQL con NATS
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

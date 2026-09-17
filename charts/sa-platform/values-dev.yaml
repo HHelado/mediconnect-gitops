@@ -1,0 +1,128 @@
+global:
+  environment: "development"
+  logLevel: "debug"
+  jwtKeyName: "jwt-secret"
+  extraLabels:
+    institution: "USAC"
+    faculty: "Ingenieria"
+    course: "Software-Avanzado"
+    stage: "dev"
+
+namespace:
+  create: false
+  name: "sa-p8-dev"
+
+postgresql:
+  enabled: true
+  persistence:
+    size: "1Gi"
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+
+nats:
+  enabled: true
+  persistence:
+    size: "512Mi"
+  resources:
+    limits:
+      cpu: 150m
+      memory: 128Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
+
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: "dev.mediconnect.local"
+      path: /
+      pathType: Prefix
+
+networkPolicies:
+  enabled: true
+
+api-gateway:
+  replicaCount: 1
+  image:
+    tag: "1.0.0-dev"
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
+  env:
+    LOG_LEVEL: debug
+  autoscaling:
+    enabled: false
+
+auth-service:
+  replicaCount: 1
+  image:
+    tag: "1.0.0-dev"
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
+  env:
+    LOG_LEVEL: debug
+  autoscaling:
+    enabled: false
+
+doctors-service:
+  replicaCount: 1
+  image:
+    tag: "1.0.0-dev"
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
+  env:
+    LOG_LEVEL: debug
+  autoscaling:
+    enabled: false
+
+appointments-service:
+  replicaCount: 1
+  image:
+    tag: "1.0.0-dev"
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
+  env:
+    LOG_LEVEL: debug
+  autoscaling:
+    enabled: false
+
+lab-results-service:
+  replicaCount: 1
+  image:
+    tag: "1.0.0-dev"
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
+  env:
+    LOG_LEVEL: debug
+  autoscaling:
+    enabled: false

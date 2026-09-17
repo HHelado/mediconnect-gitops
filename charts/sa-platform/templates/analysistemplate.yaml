@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: mediconnect-health-analysis
+  labels:
+    app.kubernetes.io/part-of: mediconnect
+spec:
+  metrics:
+    - name: health-check-web
+      interval: 5s
+      count: 2
+      successCondition: result == 200
+      failureLimit: 1
+      provider:
+        web:
+          url: "http://{{ .Release.Name }}-api-gateway:3000/healthz"
+          timeoutSeconds: 5
+    - name: health-check-job
+      interval: 10s
+      count: 1
+      failureLimit: 1
+      provider:
+        job:
+          spec:
+            template:
+              spec:
+                containers:
+                  - name: curl-check
+                    image: curlimages/curl:8.5.0
+                    command: ["curl", "-f", "-s", "http://{{ .Release.Name }}-api-gateway:3000/healthz"]
+                restartPolicy: Never
+            backoffLimit: 1

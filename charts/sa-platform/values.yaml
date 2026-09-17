@@ -1,0 +1,224 @@
+global:
+  environment: "production"
+  logLevel: "info"
+  jwtKeyName: "jwt-secret"
+  storageClass: "standard-rwo"
+  extraLabels:
+    institution: "USAC"
+    faculty: "Ingenieria"
+    course: "Software-Avanzado"
+    practice: "P8-GitOps-ArgoCD"
+
+nameOverride: ""
+fullnameOverride: ""
+
+namespace:
+  create: false
+  name: "sa-p8"
+
+# 1. Base de datos PostgreSQL StatefulSet
+postgresql:
+  enabled: true
+  image:
+    repository: postgres
+    tag: "16-alpine"
+    pullPolicy: IfNotPresent
+  auth:
+    username: "postgres"
+    existingSecret: "mediconnect-sa-platform-secrets"
+  persistence:
+    size: "2Gi"
+    storageClass: "standard-rwo"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 20m
+      memory: 128Mi
+
+# 2. Broker de Mensajeria NATS JetStream en GKE
+nats:
+  enabled: true
+  image:
+    repository: nats
+    tag: "2.10-alpine"
+    pullPolicy: IfNotPresent
+  persistence:
+    size: "1Gi"
+    storageClass: "standard-rwo"
+  resources:
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 20m
+      memory: 64Mi
+
+# 3. Ingress Controller (Opcional en GKE)
+ingress:
+  enabled: false
+  className: "gce"
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+  hosts:
+    - host: "mediconnect.cloud"
+      path: /
+      pathType: Prefix
+
+# 4. Politicas de Red (Aislamiento de trafico)
+networkPolicies:
+  enabled: true
+
+# 5. Limites y Quotas del Namespace en Cloud
+resourceQuota:
+  enabled: true
+  requests:
+    cpu: "4"
+    memory: "4Gi"
+  limits:
+    cpu: "8"
+    memory: "8Gi"
+  pods: "30"
+
+limitRange:
+  enabled: true
+  default:
+    cpu: "300m"
+    memory: "512Mi"
+  defaultRequest:
+    cpu: "50m"
+    memory: "128Mi"
+
+# 6. Trabajos Programados (CronJobs)
+cronjobs:
+  enabled: true
+  carnet: "202307629"
+  cronjob1:
+    schedule: "*/2 * * * *"
+    image:
+      repository: gahels/mediconnect-cronjob1
+      tag: "1.0.0"
+      pullPolicy: IfNotPresent
+  cronjob2:
+    schedule: "*/10 * * * *"
+    image:
+      repository: gahels/mediconnect-cronjob2
+      tag: "1.0.0"
+      pullPolicy: IfNotPresent
+
+# 7. Microservicios y API Gateway
+api-gateway:
+  replicaCount: 2
+  image:
+    repository: gahels/mediconnect-api-gateway
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  service:
+    type: LoadBalancer
+    port: 8080
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+  env:
+    LOG_LEVEL: info
+
+auth-service:
+  replicaCount: 2
+  image:
+    repository: gahels/mediconnect-auth-service
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+  env:
+    LOG_LEVEL: info
+
+doctors-service:
+  replicaCount: 2
+  image:
+    repository: gahels/mediconnect-doctors-service
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+  env:
+    LOG_LEVEL: info
+
+appointments-service:
+  replicaCount: 2
+  image:
+    repository: gahels/mediconnect-appointments-service
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+  env:
+    LOG_LEVEL: info
+
+lab-results-service:
+  replicaCount: 2
+  image:
+    repository: gahels/mediconnect-lab-results-service
+    tag: "1.0.0"
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 250m
+      memory: 256Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+  env:
+    LOG_LEVEL: info
+
+# 10. Gestion de Secretos con SealedSecrets
+sealedSecrets:
+  enabled: true
+  encryptedUser: "AgB1234567890abcdef=="
+  encryptedPassword: "AgB0987654321fedcba=="
+  encryptedJwt: "AgB1122334455667788=="

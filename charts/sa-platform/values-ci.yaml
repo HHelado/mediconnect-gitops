@@ -1,0 +1,127 @@
+global:
+  environment: "ci-cd"
+  logLevel: "info"
+  jwtKeyName: "jwt-secret"
+  storageClass: "standard"
+  extraLabels:
+    institution: "USAC"
+    faculty: "Ingenieria"
+    course: "Software-Avanzado"
+    practice: "P8-GitOps-ArgoCD"
+
+namespace:
+  create: false
+  name: "sa-p8"
+
+postgresql:
+  enabled: true
+  persistence:
+    size: "500Mi"
+    storageClass: "standard"
+  resources:
+    limits:
+      cpu: 300m
+      memory: 256Mi
+    requests:
+      cpu: 20m
+      memory: 64Mi
+
+nats:
+  enabled: true
+  persistence:
+    size: "256Mi"
+    storageClass: "standard"
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+
+ingress:
+  enabled: false
+
+networkPolicies:
+  enabled: false
+
+resourceQuota:
+  enabled: false
+
+cronjobs:
+  enabled: true
+  cronjob1:
+    schedule: "*/15 * * * *"
+    image:
+      repository: gahels/mediconnect-cronjob1
+      tag: "latest"
+      pullPolicy: IfNotPresent
+  cronjob2:
+    schedule: "*/15 * * * *"
+    image:
+      repository: gahels/mediconnect-cronjob2
+      tag: "latest"
+      pullPolicy: IfNotPresent
+
+api-gateway:
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 8080
+  resources:
+    limits:
+      cpu: 150m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+  autoscaling:
+    enabled: false
+
+auth-service:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 150m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+  autoscaling:
+    enabled: false
+
+doctors-service:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 150m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+  autoscaling:
+    enabled: false
+
+appointments-service:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 150m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+  autoscaling:
+    enabled: false
+
+lab-results-service:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 150m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+  autoscaling:
+    enabled: false

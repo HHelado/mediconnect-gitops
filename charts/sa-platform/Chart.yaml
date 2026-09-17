@@ -1,0 +1,36 @@
+apiVersion: v2
+name: sa-platform
+description: Chart de Helm para la plataforma de microservicios MediConnect - Practica 5 Software Avanzado
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - microservices
+  - kubernetes
+  - helm
+  - mediconnect
+icon: https://raw.githubusercontent.com/cncf/artwork/master/projects/helm/icon/color/helm-icon-color.png
+maintainers:
+  - name: Gahel Alejandro Herrera Jimenez
+    email: 3056713320301@ingenieria.usac.edu.gt
+dependencies:
+  - name: api-gateway
+    version: 1.0.0
+    repository: "file://charts/api-gateway"
+    enabled: true
+  - name: auth-service
+    version: 1.0.0
+    repository: "file://charts/auth-service"
+    enabled: true
+  - name: doctors-service
+    version: 1.0.0
+    repository: "file://charts/doctors-service"
+    enabled: true
+  - name: appointments-service
+    version: 1.0.0
+    repository: "file://charts/appointments-service"
+    enabled: true
+  - name: lab-results-service
+    version: 1.0.0
+    repository: "file://charts/lab-results-service"
+    enabled: true

@@ -1,0 +1,153 @@
+global:
+  environment: "production"
+  logLevel: "warn"
+  jwtKeyName: "jwt-secret"
+  extraLabels:
+    institution: "USAC"
+    faculty: "Ingenieria"
+    course: "Software-Avanzado"
+    stage: "prod"
+
+namespace:
+  create: false
+  name: "sa-p8"
+
+postgresql:
+  enabled: true
+  persistence:
+    size: "10Gi"
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: 250m
+      memory: 512Mi
+
+nats:
+  enabled: true
+  persistence:
+    size: "5Gi"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: "mediconnect.usac.edu.gt"
+      path: /
+      pathType: Prefix
+
+networkPolicies:
+  enabled: true
+
+resourceQuota:
+  enabled: true
+  requests:
+    cpu: "8"
+    memory: "8Gi"
+  limits:
+    cpu: "16"
+    memory: "16Gi"
+  pods: "50"
+
+api-gateway:
+  replicaCount: 3
+  image:
+    tag: "1.0.0"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  env:
+    LOG_LEVEL: warn
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+
+auth-service:
+  replicaCount: 3
+  image:
+    tag: "1.0.0"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  env:
+    LOG_LEVEL: warn
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70
+
+doctors-service:
+  replicaCount: 3
+  image:
+    tag: "1.0.0"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  env:
+    LOG_LEVEL: warn
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70
+
+appointments-service:
+  replicaCount: 3
+  image:
+    tag: "1.0.0"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  env:
+    LOG_LEVEL: warn
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70
+
+lab-results-service:
+  replicaCount: 3
+  image:
+    tag: "1.0.0"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  env:
+    LOG_LEVEL: warn
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70

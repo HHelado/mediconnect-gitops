@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sa-platform.fullname" . }}-config
+  labels:
+    {{- include "sa-platform.labels" . | nindent 4 }}
+data:
+  NODE_ENV: {{ .Values.global.environment | default "production" | quote }}
+  LOG_LEVEL: {{ .Values.global.logLevel | default "info" | quote }}
+  TIMEZONE: "America/Guatemala"
+  CARNET: {{ .Values.cronjobs.carnet | quote }}
+  PLATFORM_NAME: "MediConnect"
