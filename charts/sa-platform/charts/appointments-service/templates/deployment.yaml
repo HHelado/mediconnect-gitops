@@ -23,6 +23,9 @@ spec:
               - templateName: mediconnect-health-analysis
         - setWeight: 100
         - pause: { duration: 5s }
+        - analysis:
+            templates:
+              - templateName: mediconnect-health-analysis
   selector:
     matchLabels:
       {{- include "appointments-service.selectorLabels" . | nindent 6 }}
