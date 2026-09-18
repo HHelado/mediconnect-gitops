@@ -1,0 +1,40 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-latest-tag
+  annotations:
+    policies.kyverno.io/title: Disallow Latest Tag
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      La etiqueta :latest no permite trazabilidad de versiones e impide rollbacks confiables.
+      Esta politica exige que todos los contenedores especifiquen un tag semantico o digest.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: validate-image-tag
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              namespaces:
+                - kube-system
+                - kyverno
+                - argocd
+                - argo-rollouts
+          - resources:
+              names:
+                - "*postgresql*"
+                - "*nats*"
+                - "*cronjob*"
+      validate:
+        message: "El uso de la etiqueta :latest esta prohibido. Debe especificar una version semantica concreta."
+        pattern:
+          spec:
+            containers:
+              - image: "!*:latest"
