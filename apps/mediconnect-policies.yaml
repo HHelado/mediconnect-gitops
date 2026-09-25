@@ -1,7 +1,7 @@
-﻿apiVersion: argoproj.io/v1alpha1
+apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mediconnect-prod
+  name: mediconnect-policies
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,18 +9,14 @@ spec:
   project: default
   source:
     repoURL: https://github.com/HHelado/mediconnect-gitops.git
-    targetRevision: HEAD
-    path: charts/sa-platform
-    helm:
-      valueFiles:
-        - values.yaml
-        - values-prod.yaml
+    targetRevision: master
+    path: policies
   destination:
     server: https://kubernetes.default.svc
-    namespace: sa-p8
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=false
+      - CreateNamespace=true

@@ -39,6 +39,15 @@ spec:
       serviceAccountName: {{ include "doctors-service.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.securityContext | nindent 8 }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    {{- include "doctors-service.selectorLabels" . | nindent 20 }}
+                topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
