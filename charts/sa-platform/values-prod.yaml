@@ -58,7 +58,7 @@ resourceQuota:
   pods: "50"
 
 api-gateway:
-  replicaCount: 3
+  replicaCount: 2
   image:
     tag: "1.0.0"
   resources:
@@ -71,13 +71,13 @@ api-gateway:
   env:
     LOG_LEVEL: warn
   autoscaling:
-    enabled: true
+    enabled: false
     minReplicas: 3
     maxReplicas: 10
     targetCPUUtilizationPercentage: 70
 
 auth-service:
-  replicaCount: 3
+  replicaCount: 2
   image:
     tag: "1.0.0"
   resources:
@@ -90,13 +90,13 @@ auth-service:
   env:
     LOG_LEVEL: warn
   autoscaling:
-    enabled: true
+    enabled: false
     minReplicas: 3
     maxReplicas: 8
     targetCPUUtilizationPercentage: 70
 
 doctors-service:
-  replicaCount: 3
+  replicaCount: 2
   image:
     tag: "1.0.0"
   resources:
@@ -109,13 +109,13 @@ doctors-service:
   env:
     LOG_LEVEL: warn
   autoscaling:
-    enabled: true
+    enabled: false
     minReplicas: 3
     maxReplicas: 8
     targetCPUUtilizationPercentage: 70
 
 appointments-service:
-  replicaCount: 3
+  replicaCount: 2
   image:
     tag: "1.0.0"
   resources:
@@ -128,13 +128,13 @@ appointments-service:
   env:
     LOG_LEVEL: warn
   autoscaling:
-    enabled: true
+    enabled: false
     minReplicas: 3
     maxReplicas: 8
     targetCPUUtilizationPercentage: 70
 
 lab-results-service:
-  replicaCount: 3
+  replicaCount: 2
   image:
     tag: "1.0.0"
   resources:
@@ -147,14 +147,14 @@ lab-results-service:
   env:
     LOG_LEVEL: warn
   autoscaling:
-    enabled: true
+    enabled: false
     minReplicas: 3
     maxReplicas: 8
     targetCPUUtilizationPercentage: 70
 
 sealedSecrets:
   enabled: true
-  encryptedUser: "AgBao+6/KikU977op9WUdySUNy4QG0ePKkxz1/c46oLjoH164tp4JtBd3i9mJ94mMCFNUQlU5U9q3Qrxl3C7h00kZ8B9u6AfBOPFF5a2wW6OzhKlAZPO7PU9tV0B+RK5wbsk3cAeEe54U++VCnYQObQc0U42k0TsBQzs9BtP1coAHIWu1ZqODSTGbVs+Akbi9PplaiGpPyAKRYY7h0KrCGB5sBoCfK7CTs/lON3VZAbNqUNcp5sh3MQ71PndKUMJqdEzZt4A+xSHiNM2okx6Bgkpd+u7+VCCy1HPyh/I7PUvuAgreyDlPW3DyodfNk6KaQbF9nvFe8cDDvorm0TjvpF/5UUfaR9brdyN+jOLTZGIeXRRwnyObjimLyhgNbosjZrJcntRXjCWOJfNQF2LWQdcvD61vwHvK1Zo8SVEWcsFJf6hmKMAVw4xzUZBBs4Kqyiqy/4S+MOgfdf38RTRTISw5zrxJDikYLD9oKz3nZieq5LLJr7AYXSJqgCDlOmJnvgx+mx4o4wsKlFJuZJBVx3o+W2r93MrAtFU2Ff3kJVi9UzCT31mkIqbKNoyp1NxEOnqMNM/04hUMBWcqd9dhZ+r4Ip/DFoahli+XrGVyCDfDhAI16XDAfQUy/GuSm7gpDm1E8Ec+lr0oJ6bF0oY7BP0FRMUBzXRcUii8O2S3HfFBcmT187Jya9Jd5UVoBsf1UWvgEcLDaG7UaTAdBBByY0ZOQ=="
-  encryptedPassword: "AgBmftWxvyL8KF7nBgrAyCxY/7z+kjkoW12tR35v4qLfug5O/DX0n/qeQA/HTWa840VaCyokd6QYcCdc3wc04LkYAbD5HMD3vZJFLeTTPI3xejWq0GApuBn/yKdVc9yGwvwIIKVd6VDEvFKYtWfhGOqRO2EV+v1e6hHxKWCC3XXUwaUDE9MDcsTGXW/NzM2biY7fq9ypjQ4V7gcLXh+/PmKG0dHdq9+Cs4aFXYIlveI+tRRIc8Etd/4kvdIVlGjA/x0fJsr1gFzgIFhghtc4R85sNqUsHbvqL/UJfj/xgujOUHFyZ+eJm4X9AABZnC5dI5RGZOLXeH1PtSSUp9Qz3VukjMJyS07oTxar8ZS0ao6RT+AIgYmaGdmm60qevBj9d502e8TMpXP7lfC1lXGLHNs5clPxdC26IGjBtMIe3xQ8gUyDv1m1EJQiQs2UHLpdWC4z+1b7wZ8aoSuQu3n0El2iWXZd3fPOMTgFPC/koCXM4Y5pxlQH6kztnfmgeUVHy8anjVS7On7qEq7Nno26JwMrM6DkX7P/ZYBe4ED3Nh5cC8tbAHgMcwPSljd7NTZPxNVaSAVy95eLK2N6RQLOkeLJc5EUBWReFctoGe8dytcrnmyXcZznEiYk1kZpq83Gl/iTEtA2uvr4x1KTeNyV5Qu00vOGxwSgAYR/B96MQPDoKaGIaGqg2dYf9zHlNoe8nUeOv0MU2aHW2HZCA1NrGfkYYaB0RWtvcLrzZQ=="
-  encryptedJwt: "AgAArzFmpiDw/Gr2/sRwnOhL/QIYltGDhpVT31vfoODuOb8kZGkmWXKCyb7LiYBKR+TcnjHjEOb+c8apuXC+jEqmFD8/Po6B8WMut6MNKZ/i6FdHdYV39IRBmM2ey2bXU20jIgf0W5lzzm6bOeMCkscwc7PjMkBT0WLQeCEOj3oPze2m1rXDv4BfKdd+CT/Oeth9BOz3dwcp2loPEHWJc0KuTM5RAHnvKPwsO6UMEjdlS4AQRnKlZRHNa0SiIh3eUhluyDpGfxmWwdo4i6Mj7BhokME7n5F4dMpht+N52Z6RJsCZNh0Dy7DfYBAASyXWoUz+rv3AdVoaXbU9r+d2jncUqkQ3DujT6e9AKvgcoRSFKgP7j4LDcJSqNd6lD5WyUy1bLKD7SPf8yE7/ziZsGNmLkFR6UZ7BJGl9AiQERrW62S9vKMbj2qXpSOVmji3+34sXPBA52dJWftBl4Gh6JqDoeNsYLZ+bRTcKpkm6oRUgufcJrlOWRyTlrsXO4oDlt5oajVnle3bZP9mgnKYa9xi3UDxNnlUmffM6Y5JMQimh34Etyu7v6Dr9rZx1JI5+0/Fbi+C6NDsmXwx5gnOgqJ4eV5uxdz0Fa2iaoZZYa2K1n7A2BuafTTk9+9rEBg/bcM4gOgEusHFtP2Lvj7ILw4Rm/GCDoCLTm6jFm4+uKATgjLWC8j5PePlPhPh5EOj9dtF/haHzq5axna/OTeGo9vwrILD9ax3a+VXLhSaf2s0avPo="
+  encryptedUser: "AgA8+rGz2/kh/W7Aa52pf9ewy0qHS5HVWBS4YcNMK7NFfxPmVKNbUX0o1o7IbxBDADfPb+ThSAa6IyP4Pqc1gSmVEax5wn1Zkfk2pEuSBjODZQSAdDqZmJMQlDJI0T/qgkjIV67t083CXLpE3v1mpRZnzMqqqfDANTfllzRFHHetpdaL5k2sETBGSeiBtq/x/XYptBvtTS6lRKkMmkn5+ePCu2WRokhBrGCrXbHNP2siQuMgE+7TAFdRLwkba/eS2srYbWJOO04xz+1HXt70rv9VYBas9Z0H538rHz5OvXR49k9n1UFKeGdTprzSf2aDDItG2KI9kHovqoi0cq1IuXPoDVmwJrvCO5Tt4Rt1DosMuilpMRB511aB9g5l3EG/LtMo1KQr2e56Sva9bqcyc2euia8hGddiM5mFw4NnKUzhPc4F51lHMQIgnvCEenm7L/+Q6WEO0wiN16mcztG4+RtsEaOOesnkCa0NBviCy3xww4Hw4EOkw4TDGz6rCYn8oOfn7DUeccnZAQoNpb5SGOLFYzCqdb4XeRA4g6BVJAA+40LIvDPjcUJyIfL1LZVxXHFzyWYM4vhqfOHsCOtrwwpnIKbVDV1RWLStboQUp9UQIXJiSn4voHgn2hiGKExxSnUCh1Y2b4T3iD1mHHDDqun8do9AqLyxTjoC9eAWW9OL2UJOlI/Viro4xNRhzoRavrZk9SUaUzJAJPIswIGaSqO/9g=="
+  encryptedPassword: "AgB8t7RCQagmuikjIvfDzSs2qyB0+xXPeIW+mWouzeL7hl+W96tblwbUEBJjdSn+xkPm/t9SsJZryNdonBrYzOmokZauaNp3ZIr4tFPXubpKdcUPsQAaM0HwcIs1uBAbnyzIQ54+VRfjeeQI00OoSWEjUlqGCOjq5gGlq8QoU9+79gy0cz7Togox9137ME4EZG4Pc5iTkAY7U4s2gJG7BbYvw3s9XUHt9Yf4oaznbK3LQjUybUqbEvY2V8p+etH1tXlRoZ60nIra9tLunQVHX9AA/vfProO+0baP/0QIXA+rAl06dsqCHYmE8IyKe3AW8ef5ibhWJ6FN+Om4jUvuV+NlS7VY8y9DIP2a3RWuc6M4BBsrLqEmO4Pq4WXsVry+yN86Xzf+htrVemZJArnjZiOlu17GIqtdbOf66Uk7vXUwW9gFQzQ/zVv2cSL88n/udO2z3skGa39sEaajUCY26PLjSi85anKz0Cdk22jwtnotB8+4C17+7QUVfjRNPyNo0MmOjBc8jc2EXuf93UixavKJhJNFn5De6njb36u1dilWwNtc5lbrbPe1lgwJZD9opEXBme2aX3jsMOWPt8GfEE9A2zSodhLkSb3GRDFucxZ2j7o9YfG2t9yobGFfQgOLt9JGwgFsCHu94PR8zw5pzPTsaTRL57mGLAkqdrxCT/JH6Ez5vS/T0BxdKtxJ4kIfnJv6BTH16bhcbk+XPiZZviHQEdc8jXqYBGwDc3Hq"
+  encryptedJwt: "AgCnohqOy4QKVhyBUnjdsU+YeqX9Ne1O2eNzFPu/T2OeUZdOOJAsN7si80b3rt7i7HhGu4tDfKsh41Fwr8SUyeGpLzNNRTMm8RqtxWlFntkDy/IzQwdT5yCmwadFbIUnmsNYKhivBYQoyWm8TMpXiEgj+fTUe7cGkbQxwPBqQY+cJ6a3N8WD/jhzpvF6ugkZ7k6OiQmQwkhjsG8OqQ6iolnwmrp33Y9tZ6GEUD28yVI3RdfhItNcNWbDzFswBkOrMLS+K+iKgadiidtwbdHNnNCHF7xW4ZdiCDFxeGZoVZu8vg/MD6Gi4LGyIfn9DA8bM5Z+FokdWzWvSo97YUEicdfEHNQMid8hJ9lEE/xB2mWdXJ3KDNU6BpmJCfVLv5IJGf0zD+4HVzFA4EFP1OZiGvT4ZmNU10H7locR79MursaV9/k0YGNKYGBYgA5KGhatguClGHL/ws8n91Wd5ETFjfmnXIyC940sQyW1z/qArO9sajm8z4+kuP3WVCB3yj3uDCPZvQONWUafDqTksgiCI75nA7nLabgs7+I1vsJLJ0hQ0w+VRbDX/rmefJ477++KxuExQgXCIjmsBelYQsAtvdDB5WIMQNWR9Jc5ziG7XDu/pj8Gwvk2mMgoycBu6Y+pE96hP2H1cTYoDSNLgDZsC3xxHUWMcGH4cZEylk5Ig2j2kt/5pK0oS8qf+cVlCAmLg32XBs6ymsB6LyU7e6RruwEturWooORyFxCcWsTMFNC3VcIKvom1"
 
