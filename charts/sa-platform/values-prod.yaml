@@ -58,7 +58,7 @@ resourceQuota:
   pods: "50"
 
 api-gateway:
-  replicaCount: 2
+  replicaCount: 1
   image:
     tag: "1.0.0"
   resources:
@@ -77,7 +77,7 @@ api-gateway:
     targetCPUUtilizationPercentage: 70
 
 auth-service:
-  replicaCount: 2
+  replicaCount: 1
   image:
     tag: "1.0.0"
   resources:
@@ -96,7 +96,7 @@ auth-service:
     targetCPUUtilizationPercentage: 70
 
 doctors-service:
-  replicaCount: 2
+  replicaCount: 1
   image:
     tag: "1.0.0"
   resources:
@@ -115,7 +115,7 @@ doctors-service:
     targetCPUUtilizationPercentage: 70
 
 appointments-service:
-  replicaCount: 2
+  replicaCount: 1
   image:
     tag: "1.0.0"
   resources:
@@ -134,7 +134,7 @@ appointments-service:
     targetCPUUtilizationPercentage: 70
 
 lab-results-service:
-  replicaCount: 2
+  replicaCount: 1
   image:
     tag: "1.0.0"
   resources:
