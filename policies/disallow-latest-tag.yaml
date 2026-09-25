@@ -27,6 +27,7 @@ spec:
                 - kyverno
                 - argocd
                 - argo-rollouts
+                - velero
           - resources:
               names:
                 - "*postgresql*"
